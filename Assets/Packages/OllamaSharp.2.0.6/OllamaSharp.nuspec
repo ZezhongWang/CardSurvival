@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>OllamaSharp</id>
+    <version>2.0.6</version>
+    <title>API bindings for Ollama</title>
+    <authors>OllamaSharp</authors>
+    <license type="file">LICENSE</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <icon>Ollama.png</icon>
+    <readme>README.md</readme>
+    <projectUrl>https://github.com/awaescher/OllamaSharp</projectUrl>
+    <description>This project adds bindings to the Ollama API to include offline LLMs into your .NET apps</description>
+    <copyright>Andreas Wäscher</copyright>
+    <tags>ollama ollama-api api llm</tags>
+    <repository type="git" url="https://github.com/awaescher/OllamaSharp" commit="51c165e8a39b7639051e3a9099dd0d92b4ca3587" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="8.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Text.Json" version="8.0.3" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
