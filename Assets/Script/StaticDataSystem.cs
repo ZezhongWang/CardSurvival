@@ -49,12 +49,12 @@ public class StaticDataSystem : MonoBehaviour
     {
         foreach (var recipe in _recipes.Values)
         {
-            var key = GenerateKey(recipe.Ingredients);
+            var key = GenerateIngredientsKey(recipe.Ingredients);
             _recipeLookup[key] = recipe;
         }
     }
 
-    private string GenerateKey(List<BaseCardDataAsset> ingredients)
+    public string GenerateIngredientsKey(List<BaseCardDataAsset> ingredients)
     {
         var sortedIngredients = ingredients.OrderBy(ingredient => ingredient.Archetype)
             .Select(ingredient => ingredient.Archetype);
@@ -63,7 +63,7 @@ public class StaticDataSystem : MonoBehaviour
 
     public RecipeDataAsset FindValidRecipe(List<BaseCardDataAsset> ingredients)
     {
-        var key = GenerateKey(ingredients);
+        var key = GenerateIngredientsKey(ingredients);
         if (_recipeLookup.TryGetValue(key, out RecipeDataAsset recipe))
         {
             return recipe;
@@ -71,6 +71,7 @@ public class StaticDataSystem : MonoBehaviour
 
         return null;
     }
+    
 
     public RecipeDataAsset FindValidRecipe(CardStack stack)
     {
@@ -93,9 +94,9 @@ public class StaticDataSystem : MonoBehaviour
         }
     }
 
-    public BaseCardDataAsset GetCardDataAsset(string cardName)
+    public BaseCardDataAsset GetCardDataAsset(string archetype)
     {
-        if (_cards.TryGetValue(cardName, out BaseCardDataAsset card))
+        if (_cards.TryGetValue(archetype, out BaseCardDataAsset card))
         {
             return card;
         }
@@ -107,7 +108,7 @@ public class StaticDataSystem : MonoBehaviour
     {
         if (cardDataAsset != null && !_cards.ContainsKey(cardDataAsset.name))
         {
-            _cards.Add(cardDataAsset.name, cardDataAsset);
+            _cards.Add(cardDataAsset.Archetype, cardDataAsset);
         }
     }
 

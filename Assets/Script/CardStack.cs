@@ -26,7 +26,7 @@ public class CardStack : MonoBehaviour
         _progressBar.gameObject.SetActive(false);
     }
     
-    public System.Collections.Generic.LinkedList<BaseCard>.Enumerator GetEnumerator()
+    public LinkedList<BaseCard>.Enumerator GetEnumerator()
     {
         return _cardsInStack.GetEnumerator();
     }
@@ -116,9 +116,15 @@ public class CardStack : MonoBehaviour
         _progressBar.gameObject.SetActive(isProcessing);
     }
     
-    private void CheckForRecipe()
+    private async void CheckForRecipe()
     {
+        
         _currentRecipe = StaticDataSystem.Instance.FindValidRecipe(this);
+        if (_currentRecipe == null && Count > 1)
+        {
+            _currentRecipe = await LLMAdapter.Instance.TryGetRecipe(this);
+        }
+        
         SetProcessingState(_currentRecipe != null);
 
         if (_currentRecipe == null)
@@ -127,13 +133,13 @@ public class CardStack : MonoBehaviour
         }
         else
         {
-            Debug.LogFormat("CheckForRecipe: Found recipe for {0}", _currentRecipe.Deliverable.name);
+            Debug.LogFormat("CheckForRecipe: Found recipe for {0}", _currentRecipe.Deliverable.Archetype);
         }
     }
 
     public override string ToString()
     {
-        return string.Join(", ", _cardsInStack.Select(card => card.DataAsset.name));
+        return string.Join(", ", _cardsInStack.Select(card => card.DataAsset.Archetype));
     }
     
     

@@ -34,7 +34,7 @@ public class BaseCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public virtual void Initialize(BaseCardDataAsset dataAsset)
     {
         DataAsset = dataAsset;
-        _nameText.text = dataAsset.name;
+        _nameText.text = dataAsset.Archetype;
     }
 
     public CardStack GetStack()
@@ -49,7 +49,7 @@ public class BaseCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("OnBeginDrag " + DataAsset.name);
+        Debug.Log("OnBeginDrag " + DataAsset.Archetype);
         // This makes the card not interfere with raycasting
         GetComponent<CanvasGroup>().blocksRaycasts = false;
         _cursorOffset = new Vector2(eventData.position.x - transform.position.x,
@@ -99,6 +99,6 @@ public class BaseCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public override string ToString()
     {
-        return DataAsset.name;
+        return DataAsset.Archetype;
     }
 }

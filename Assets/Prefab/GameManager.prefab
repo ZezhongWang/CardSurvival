@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 62255884270547112}
   - component: {fileID: 6323588140379295572}
   - component: {fileID: 1845958688628998873}
+  - component: {fileID: 9118338691927687717}
+  - component: {fileID: 228606575064494649}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -91,3 +93,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardPrefab: {fileID: 7268237329991700982, guid: fb1a04093a86fd240b1e8a094a033718, type: 3}
+--- !u!114 &9118338691927687717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8132996882286869928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29b8a0a6cf11a604aae54c98c9653500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &228606575064494649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8132996882286869928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201ad690bd4895b41804bcb36b135d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
