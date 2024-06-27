@@ -1,0 +1,72 @@
+{
+  "examples": [
+    {
+      "ingredients": "human-tree",
+      "deliverable": "wood"
+    },
+    {
+      "ingredients": "human-apple",
+      "deliverable": "apple tree"
+    },
+    {
+      "ingredients": "human-apple tree",
+      "deliverable": "apple"
+    },
+    {
+      "ingredients": "human-wood",
+      "deliverable": "house"
+    },
+    {
+      "ingredients": "human-house",
+      "deliverable": "city"
+    },
+    {
+      "ingredients": "human-city",
+      "deliverable": "world"
+    },
+    {
+      "ingredients": "human-world",
+      "deliverable": "universe"
+    },
+    {
+      "ingredients": "human-universe",
+      "deliverable": "god"
+    },
+    {
+      "ingredients": "stone-human",
+      "deliverable": "brick"
+    },
+    {
+      "ingredients": "flint-wood",
+      "deliverable": "fire"
+    },
+    {
+      "ingredients": "fire-wood",
+      "deliverable": "ash"
+    },
+    {
+      "ingredients": "fire-ash",
+      "deliverable": "glass"
+    },
+    {
+      "ingredients": "fire-glass",
+      "deliverable": "sand"
+    },
+    {
+      "ingredients": "fire-sand",
+      "deliverable": "glass"
+    },
+    {
+      "ingredients": "fire-brick",
+      "deliverable": "brick"
+    },
+    {
+      "ingredients": "fire-brick",
+      "deliverable": "stone"
+    },
+    {
+      "ingredients": "fire-human",
+      "deliverable": "cooked meat"
+    }
+  ]
+}

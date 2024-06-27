@@ -28,32 +28,12 @@ public class StaticDataSystem : MonoBehaviour
     void Start()
     {
         InitStaticData();
-        PreprocessRecipes();
     }
 
     void Update()
     {
     }
-
-    public RecipeDataAsset GetRecipeDataAsset(string recipeName)
-    {
-        if (_recipes.TryGetValue(recipeName, out RecipeDataAsset recipe))
-        {
-            return recipe;
-        }
-
-        return null;
-    }
-
-    private void PreprocessRecipes()
-    {
-        foreach (var recipe in _recipes.Values)
-        {
-            var key = GenerateIngredientsKey(recipe.Ingredients);
-            _recipeLookup[key] = recipe;
-        }
-    }
-
+    
     public string GenerateIngredientsKey(List<BaseCardDataAsset> ingredients)
     {
         var sortedIngredients = ingredients.OrderBy(ingredient => ingredient.Archetype)
@@ -91,6 +71,8 @@ public class StaticDataSystem : MonoBehaviour
         {
             Debug.Log("Registering recipe: " + recipeDataAsset.name);
             _recipes.Add(recipeDataAsset.name, recipeDataAsset);
+            var key = GenerateIngredientsKey(recipeDataAsset.Ingredients);
+            _recipeLookup[key] = recipeDataAsset;
         }
     }
 

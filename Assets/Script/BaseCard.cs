@@ -13,6 +13,8 @@ public class BaseCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     [SerializeField] private TextMeshProUGUI _nameText;
 
     private Vector2 _cursorOffset;
+    
+    private int _leftDurability = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +36,7 @@ public class BaseCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public virtual void Initialize(BaseCardDataAsset dataAsset)
     {
         DataAsset = dataAsset;
+        _leftDurability = dataAsset.Durability;
         _nameText.text = dataAsset.Archetype;
     }
 
@@ -56,6 +59,7 @@ public class BaseCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             eventData.position.y - transform.position.y);
         if (GetStack().Count > 1)
         {
+            GetStack().SetProcessingState(false);
             // Create a new stack for the card
             var newStack = Instantiate(GameManager.Instance.CardStackPrefab, transform.position, Quaternion.identity,
                 GameManager.Instance.Canvas.transform).GetComponent<CardStack>();
@@ -100,5 +104,10 @@ public class BaseCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public override string ToString()
     {
         return DataAsset.Archetype;
+    }
+
+    public int ReduceDurability()
+    {
+        return --_leftDurability;
     }
 }

@@ -42,6 +42,8 @@ public class LLMAdapter : MonoBehaviour
         
         string key = StaticDataSystem.Instance.GenerateIngredientsKey(NewRecipe.Ingredients);
         NewRecipe.Duration = 1.0f;
+        
+        // call LLM to get deliverable
         string deliverable = await _backendLLM.GetDeliverable(key);
         NewRecipe.Deliverable = StaticDataSystem.Instance.GetCardDataAsset(deliverable);
         if (NewRecipe.Deliverable == null)

@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.PlayerLoop;
+using UnityEngine.UI;
 
 public class CardStack : MonoBehaviour
 {
@@ -12,25 +13,26 @@ public class CardStack : MonoBehaviour
     private bool _isProcessingRecipe = false;
     private float _progress;
     private RecipeDataAsset _currentRecipe;
-    
-    [SerializeField]
-    private ProgressBar _progressBar;
-    
+
+    [SerializeField] private ProgressBar _progressBar;
+
     public int Count => _cardsInStack.Count;
+
     public void Initialize(BaseCard card)
     {
         _cardsInStack = new LinkedList<BaseCard>();
         _cardsInStack.AddFirst(card);
         card.StackNode = _cardsInStack.First;
         card.transform.SetParent(this.transform);
+        card.transform.localPosition = Vector3.zero;
         _progressBar.gameObject.SetActive(false);
     }
-    
+
     public LinkedList<BaseCard>.Enumerator GetEnumerator()
     {
         return _cardsInStack.GetEnumerator();
     }
-    
+
     private void Start()
     {
         // Initialization code here
@@ -52,7 +54,7 @@ public class CardStack : MonoBehaviour
         Destroy(other.gameObject);
         OnCardChanged();
     }
-    
+
     private void StackCard(BaseCard card)
     {
         Assert.IsNotNull(card);
@@ -61,13 +63,14 @@ public class CardStack : MonoBehaviour
         card.transform.SetParent(this.transform);
         OnCardChanged();
     }
-    
+
     private void OnCardChanged()
     {
         if (_cardsInStack.Count == 0)
         {
             Destroy(gameObject);
         }
+
         CheckForRecipe();
     }
 
@@ -87,6 +90,7 @@ public class CardStack : MonoBehaviour
 
     private void ProcessRecipe()
     {
+        bool CardsChanged = false;
         // Remove the ingredients from the stack, and add the deliverable to canvas
         foreach (var ingredient in _currentRecipe.Ingredients)
         {
@@ -96,51 +100,63 @@ public class CardStack : MonoBehaviour
             {
                 if (enumerator.Current.DataAsset.Archetype == ingredient.Archetype)
                 {
-                    _cardsInStack.Remove(enumerator.Current);
-                    Destroy(enumerator.Current.gameObject);
+                    if (enumerator.Current.ReduceDurability() <= 0)
+                    {
+                        _cardsInStack.Remove(enumerator.Current);
+                        Destroy(enumerator.Current.gameObject);
+                        CardsChanged = true;
+                    }
+
                     break;
                 }
             }
         }
-        
+
+        // instance the deliverable card next to the stack
         var deliverableCard = GameManager.Instance.CardFactory.CreateCard(_currentRecipe.Deliverable);
-        deliverableCard.transform.position = transform.position;
-        _currentRecipe = null;
+        var rectTransform = deliverableCard.GetComponent<RectTransform>();
+        float halfCardWidth = rectTransform.rect.width * rectTransform.localScale.x;
+        deliverableCard.transform.position = transform.position + new Vector3(halfCardWidth + 10, 0, 0);
+        
         SetProcessingState(false);
-        StackCard(deliverableCard);
+        if (CardsChanged)
+        {
+            OnCardChanged();
+        }
     }
 
-    private void SetProcessingState(bool isProcessing)
+    public void SetProcessingState(bool isProcessing)
     {
         _isProcessingRecipe = isProcessing;
         _progressBar.gameObject.SetActive(isProcessing);
+        if (!isProcessing)
+        {
+            _progress = 0.0f;
+            _currentRecipe = null;
+        }
     }
-    
+
     private async void CheckForRecipe()
     {
-        
         _currentRecipe = StaticDataSystem.Instance.FindValidRecipe(this);
         if (_currentRecipe == null && Count > 1)
         {
             _currentRecipe = await LLMAdapter.Instance.TryGetRecipe(this);
-        }
-        
-        SetProcessingState(_currentRecipe != null);
-
-        if (_currentRecipe == null)
-        {
-            Debug.LogFormat("CheckForRecipe: No recipe found for stack: {0}", this);
+            if (_currentRecipe != null)
+            {
+                Debug.LogFormat("CheckForRecipe: Add new recipe for {0}", _currentRecipe.Deliverable.Archetype);
+            }
         }
         else
         {
-            Debug.LogFormat("CheckForRecipe: Found recipe for {0}", _currentRecipe.Deliverable.Archetype);
+            Debug.LogFormat("CheckForRecipe: Found existing recipe for {0}", _currentRecipe.Deliverable.Archetype);
         }
+
+        SetProcessingState(_currentRecipe != null);
     }
 
     public override string ToString()
     {
         return string.Join(", ", _cardsInStack.Select(card => card.DataAsset.Archetype));
     }
-    
-    
 }

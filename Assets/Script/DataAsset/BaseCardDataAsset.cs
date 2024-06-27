@@ -10,6 +10,7 @@ public enum CardType
     Resource,
     Building,
     Food,
+    Location
     // Add more card types as needed
 }
 
@@ -17,4 +18,5 @@ public class BaseCardDataAsset : ScriptableObject
 {
     public CardType CardType;
     public string Archetype;
+    public int Durability;
 }

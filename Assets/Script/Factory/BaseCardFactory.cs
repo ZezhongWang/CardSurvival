@@ -10,8 +10,9 @@ public class BaseCardFactory : AbstractCardFactory
     public override BaseCard CreateCard(BaseCardDataAsset dataAsset)
     {
         Assert.IsNotNull(CardPrefab);
-        BaseCard card = Instantiate(CardPrefab);
+        BaseCard card = Instantiate(CardPrefab, GameManager.Instance.Canvas.transform);
         card.Initialize(dataAsset);
+        
         return card;
     }
 }
