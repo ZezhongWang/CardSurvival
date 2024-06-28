@@ -2,71 +2,111 @@
   "examples": [
     {
       "ingredients": "human-tree",
-      "deliverable": "wood"
+      "deliverable": "wood,Resource"
     },
     {
       "ingredients": "human-apple",
-      "deliverable": "apple tree"
+      "deliverable": "apple tree,Resource"
     },
     {
       "ingredients": "human-apple tree",
-      "deliverable": "apple"
+      "deliverable": "apple,Food"
     },
     {
       "ingredients": "human-wood",
-      "deliverable": "house"
+      "deliverable": "house,Building"
     },
     {
       "ingredients": "human-house",
-      "deliverable": "city"
+      "deliverable": "city,Location"
     },
     {
       "ingredients": "human-city",
-      "deliverable": "world"
+      "deliverable": "world,Location"
     },
     {
       "ingredients": "human-world",
-      "deliverable": "universe"
+      "deliverable": "universe,Location"
     },
     {
       "ingredients": "human-universe",
-      "deliverable": "god"
+      "deliverable": "god,Character"
     },
     {
       "ingredients": "stone-human",
-      "deliverable": "brick"
+      "deliverable": "brick,Resource"
     },
     {
       "ingredients": "flint-wood",
-      "deliverable": "fire"
+      "deliverable": "fire,Resource"
     },
     {
       "ingredients": "fire-wood",
-      "deliverable": "ash"
+      "deliverable": "ash,Resource"
     },
     {
       "ingredients": "fire-ash",
-      "deliverable": "glass"
+      "deliverable": "glass,Resource"
     },
     {
       "ingredients": "fire-glass",
-      "deliverable": "sand"
+      "deliverable": "sand,Resource"
     },
     {
       "ingredients": "fire-sand",
-      "deliverable": "glass"
+      "deliverable": "glass,Resource"
     },
     {
       "ingredients": "fire-brick",
-      "deliverable": "brick"
+      "deliverable": "brick,Resource"
     },
     {
       "ingredients": "fire-brick",
-      "deliverable": "stone"
+      "deliverable": "stone,Resource"
     },
     {
       "ingredients": "fire-human",
-      "deliverable": "cooked meat"
+      "deliverable": "cooked meat,Food"
+    },
+    {
+      "ingredients": "human-island",
+      "deliverable": "tree,Resource"
+    },
+    {
+      "ingredients": "human-island",
+      "deliverable": "meat,Food"
+    },
+    {
+      "ingredients": "human-island",
+      "deliverable": "human,Character"
+    },
+    {
+      "ingredients": "human-island",
+      "deliverable": "sand,Resource"
+    },
+    {
+      "ingredients": "human-island",
+      "deliverable": "rock,Resource"
+    },
+    {
+      "ingredients": "human-island",
+      "deliverable": "insect,Food"
+    },
+    {
+      "ingredients": "human-boat",
+      "deliverable": "china,Location"
+    },
+    {
+      "ingredients": "human-boat",
+      "deliverable": "america,Location"
+    },
+    {
+      "ingredients": "human-flight",
+      "deliverable": "africa,Location"
+    },
+    {
+      "ingredients": "human-rocket",
+      "deliverable": "moon,Location"
     }
   ]
 }

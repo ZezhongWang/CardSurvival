@@ -63,8 +63,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b99de435bb3a3478baebf370f229ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardTypeKeys: 000000000100000002000000
+  _cardTypeKeys: 0000000001000000020000000300000004000000
   _cardFactoryValues:
+  - {fileID: 1845958688628998873}
+  - {fileID: 1845958688628998873}
   - {fileID: 1845958688628998873}
   - {fileID: 1845958688628998873}
   - {fileID: 1845958688628998873}

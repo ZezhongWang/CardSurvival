@@ -59,11 +59,7 @@ public class BaseCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             eventData.position.y - transform.position.y);
         if (GetStack().Count > 1)
         {
-            GetStack().SetProcessingState(false);
-            // Create a new stack for the card
-            var newStack = Instantiate(GameManager.Instance.CardStackPrefab, transform.position, Quaternion.identity,
-                GameManager.Instance.Canvas.transform).GetComponent<CardStack>();
-            newStack.Initialize(this);
+            UnStack();
         }
     }
 
@@ -97,10 +93,19 @@ public class BaseCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void StackOn(CardStack other)
     {
         other.Concat(GetStack());
-        transform.SetParent(other.transform);
         // Todo: should adjust sorting layer here...
     }
 
+    private void UnStack()
+    {
+        // Unstack the card from the card stack
+        GetStack().UnStackCard(this);
+        // Create a new stack for the card
+        var newStack = Instantiate(GameManager.Instance.CardStackPrefab, transform.position, Quaternion.identity,
+            GameManager.Instance.Canvas.transform).GetComponent<CardStack>();
+        newStack.Initialize(this);
+    }
+    
     public override string ToString()
     {
         return DataAsset.Archetype;

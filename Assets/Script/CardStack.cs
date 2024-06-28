@@ -47,6 +47,7 @@ public class CardStack : MonoBehaviour
         {
             _cardsInStack.AddLast(node.Value);
             node.Value.SetStack(this);
+            node.Value.StackNode = _cardsInStack.Last;
             node = node.Next;
         }
 
@@ -55,12 +56,12 @@ public class CardStack : MonoBehaviour
         OnCardChanged();
     }
 
-    private void StackCard(BaseCard card)
+    public void UnStackCard(BaseCard card)
     {
         Assert.IsNotNull(card);
-        _cardsInStack.AddLast(card);
-        card.StackNode = _cardsInStack.Last;
-        card.transform.SetParent(this.transform);
+        _cardsInStack.Remove(card.StackNode);
+        card.StackNode = null;
+        card.transform.SetParent(null);
         OnCardChanged();
     }
 
@@ -138,6 +139,12 @@ public class CardStack : MonoBehaviour
 
     private async void CheckForRecipe()
     {
+        if (Count <= 1)
+        {
+            SetProcessingState(false);
+            return;
+        }
+        
         _currentRecipe = StaticDataSystem.Instance.FindValidRecipe(this);
         if (_currentRecipe == null && Count > 1)
         {

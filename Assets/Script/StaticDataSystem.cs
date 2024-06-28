@@ -59,6 +59,11 @@ public class StaticDataSystem : MonoBehaviour
         var cards = new List<BaseCardDataAsset>();
         while (enumerator.MoveNext())
         {
+            if (enumerator.Current.DataAsset.CardType == CardType.Location)
+            {
+                // don't provide any fixed recipe for location cards
+                return null;
+            }
             cards.Add(enumerator.Current.DataAsset);
         }
 

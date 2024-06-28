@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using Random = System.Random;
 
 public class LLMAdapter : MonoBehaviour
 {
@@ -41,19 +43,28 @@ public class LLMAdapter : MonoBehaviour
         }
         
         string key = StaticDataSystem.Instance.GenerateIngredientsKey(NewRecipe.Ingredients);
-        NewRecipe.Duration = 1.0f;
+        NewRecipe.Duration = 1;
         
         // call LLM to get deliverable
         string deliverable = await _backendLLM.GetDeliverable(key);
+        // deliverable is in format wood,resource
+        string[] deliverableSplit = deliverable.Split(',');
+        if (deliverableSplit.Length != 2)
+        {
+            Debug.Log("TryGetRecipe: Invalid deliverable format: " + deliverable);
+            return null;
+        }
+        deliverable = deliverableSplit[0];
+        
         NewRecipe.Deliverable = StaticDataSystem.Instance.GetCardDataAsset(deliverable);
         if (NewRecipe.Deliverable == null)
         {
             // create a new BaseCardDataAsset
             BaseCardDataAsset NewCard = BaseCardDataAsset.CreateInstance("BaseCardDataAsset") as BaseCardDataAsset;
+            bool success = Enum.TryParse(deliverableSplit[1], out CardType cardType);
             NewCard.name = deliverable;
             NewCard.Archetype = deliverable;
-            // todo: should diversify card type here
-            NewCard.CardType = CardType.Resource;
+            NewCard.SetCardType(success? cardType : CardType.Resource); 
             StaticDataSystem.Instance.RegisterCard(NewCard);
             NewRecipe.Deliverable = NewCard;
         }

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec2438b0f0654124ab92808f9c3f7618, type: 3}
-  m_Name: wood
+  m_Name: island
   m_EditorClassIdentifier: 
-  CardType: 1
-  Archetype: wood
-  Durability: 0
+  CardType: 4
+  Archetype: island
+  Durability: 2147483647
