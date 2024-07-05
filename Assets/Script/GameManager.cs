@@ -16,8 +16,6 @@ public class GameManager : MonoBehaviour
 
     public GeneralCardFactory CardFactory { get; private set; }
     
-    public LLMAdapter LLMAdapter { get; private set; }
-    
     [SerializeField]
     private Canvas canvas;
     
@@ -37,6 +35,5 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         CardFactory = GetComponent<GeneralCardFactory>();
-        LLMAdapter = GetComponent<LLMAdapter>();
     }
 }

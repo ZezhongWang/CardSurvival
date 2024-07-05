@@ -72,10 +72,10 @@ public class StaticDataSystem : MonoBehaviour
 
     public void RegisterRecipe(RecipeDataAsset recipeDataAsset)
     {
-        if (recipeDataAsset != null && !_recipes.ContainsKey(recipeDataAsset.name))
+        if (recipeDataAsset != null && !_recipes.ContainsKey(recipeDataAsset.Deliverable.Archetype))
         {
-            Debug.Log("Registering recipe: " + recipeDataAsset.name);
-            _recipes.Add(recipeDataAsset.name, recipeDataAsset);
+            Debug.Log("Registering recipe: " + recipeDataAsset.Deliverable.Archetype);
+            _recipes.Add(recipeDataAsset.Deliverable.Archetype, recipeDataAsset);
             var key = GenerateIngredientsKey(recipeDataAsset.Ingredients);
             _recipeLookup[key] = recipeDataAsset;
         }

@@ -148,7 +148,7 @@ public class CardStack : MonoBehaviour
         _currentRecipe = StaticDataSystem.Instance.FindValidRecipe(this);
         if (_currentRecipe == null && Count > 1)
         {
-            _currentRecipe = await LLMAdapter.Instance.TryGetRecipe(this);
+            _currentRecipe = await RecipeGenerator.Instance.TryGetRecipe(this);
             if (_currentRecipe != null)
             {
                 Debug.LogFormat("CheckForRecipe: Add new recipe for {0}", _currentRecipe.Deliverable.Archetype);

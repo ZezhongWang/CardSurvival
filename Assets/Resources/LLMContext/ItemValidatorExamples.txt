@@ -1,0 +1,7 @@
+apple=Yes
+fire=Yes
+boat=Yes
+stone=Yes
+city=No
+idea=No
+farm=Yes
