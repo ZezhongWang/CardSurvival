@@ -17,7 +17,7 @@ public class LLMSystem : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Debug.Log("History:" + GetChatHistory());
+        Debug.Log(GetType().Name + " History:" + GetChatHistory());
     }
     
     public virtual void SetUpContext()

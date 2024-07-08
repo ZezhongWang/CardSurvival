@@ -35,4 +35,14 @@ public class BaseCardDataAsset : ScriptableObject
                 break;
         }
     }
+
+    public bool IsValid()
+    {
+        return Archetype.Length > 0;
+    }
+    
+    public override string ToString()
+    {
+        return Archetype;
+    }
 }

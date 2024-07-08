@@ -1,0 +1,2 @@
+forest=rock,wood,tres,apple,soil,bee nest
+great plains=rock,soil,tree,grass,flower

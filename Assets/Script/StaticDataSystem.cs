@@ -11,6 +11,7 @@ public class StaticDataSystem : MonoBehaviour
     private Dictionary<string, RecipeDataAsset> _recipes = new Dictionary<string, RecipeDataAsset>();
     private Dictionary<string, RecipeDataAsset> _recipeLookup = new Dictionary<string, RecipeDataAsset>();
     private Dictionary<string, BaseCardDataAsset> _cards = new Dictionary<string, BaseCardDataAsset>();
+    private Dictionary<string, List<BaseCardDataAsset>> _biomeItems = new Dictionary<string, List<BaseCardDataAsset>>();
 
     private void Awake()
     {
@@ -59,11 +60,6 @@ public class StaticDataSystem : MonoBehaviour
         var cards = new List<BaseCardDataAsset>();
         while (enumerator.MoveNext())
         {
-            if (enumerator.Current.DataAsset.CardType == CardType.Location)
-            {
-                // don't provide any fixed recipe for location cards
-                return null;
-            }
             cards.Add(enumerator.Current.DataAsset);
         }
 
@@ -72,10 +68,10 @@ public class StaticDataSystem : MonoBehaviour
 
     public void RegisterRecipe(RecipeDataAsset recipeDataAsset)
     {
-        if (recipeDataAsset != null && !_recipes.ContainsKey(recipeDataAsset.Deliverable.Archetype))
+        if (recipeDataAsset != null && !_recipes.ContainsKey(recipeDataAsset.GenerateKey()))
         {
-            Debug.Log("Registering recipe: " + recipeDataAsset.Deliverable.Archetype);
-            _recipes.Add(recipeDataAsset.Deliverable.Archetype, recipeDataAsset);
+            Debug.Log("Registering recipe: " + recipeDataAsset);
+            _recipes.Add(recipeDataAsset.GenerateKey(), recipeDataAsset);
             var key = GenerateIngredientsKey(recipeDataAsset.Ingredients);
             _recipeLookup[key] = recipeDataAsset;
         }
@@ -93,9 +89,10 @@ public class StaticDataSystem : MonoBehaviour
 
     public void RegisterCard(BaseCardDataAsset cardDataAsset)
     {
-        if (cardDataAsset != null && !_cards.ContainsKey(cardDataAsset.name))
+        if (cardDataAsset != null)
         {
-            _cards.Add(cardDataAsset.Archetype, cardDataAsset);
+            Debug.Log("Registering card: " + cardDataAsset.Archetype);
+            _cards.TryAdd(cardDataAsset.Archetype, cardDataAsset);
         }
     }
 
@@ -110,5 +107,29 @@ public class StaticDataSystem : MonoBehaviour
         }
 
         Debug.Log("Registered " + _recipes.Count + " recipes");
+    }
+    
+    public void RegisterBiomeItem(string biome, List<BaseCardDataAsset> cardDataAssets)
+    {
+        if (cardDataAssets == null)
+        {
+            Debug.LogError("RegisterBiomeItem: cardDataAssets is null");
+            return;
+        }
+        
+        _biomeItems.TryAdd(biome, cardDataAssets);
+        foreach (var card in cardDataAssets)
+        {
+            RegisterCard(card);
+        } 
+    }
+    
+    public List<BaseCardDataAsset> GetBiomeItem(string archetype)
+    {
+        if (_biomeItems.TryGetValue(archetype, out List<BaseCardDataAsset> cardDataAssets))
+        {
+            return cardDataAssets;
+        }
+        return null;
     }
 }

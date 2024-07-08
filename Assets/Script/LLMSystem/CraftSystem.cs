@@ -6,9 +6,9 @@ using OllamaSharp.Models.Chat;
 
 
 
-public class RecipeGenerator : LLMSystem
+public class CraftSystem : LLMSystem
 {
-    public static RecipeGenerator Instance { get; private set; }
+    public static CraftSystem Instance { get; private set; }
 
     private ItemValidator _validator;
     
@@ -135,11 +135,13 @@ public class RecipeGenerator : LLMSystem
             // no valid deliverable means no valid recipe
             return null;
         }
+        var deliverables = new List<BaseCardDataAsset>();
+        deliverables.Add(deliverable);
         
         RecipeDataAsset newRecipe = RecipeDataAsset.CreateInstance("RecipeDataAsset") as RecipeDataAsset;
         newRecipe.Ingredients = ingredients;
         newRecipe.Duration = 1;
-        newRecipe.Deliverable = deliverable;
+        newRecipe.Deliverables = deliverables;
         StaticDataSystem.Instance.RegisterRecipe(newRecipe);
         return newRecipe;
     }

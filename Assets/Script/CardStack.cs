@@ -114,7 +114,7 @@ public class CardStack : MonoBehaviour
         }
 
         // instance the deliverable card next to the stack
-        var deliverableCard = GameManager.Instance.CardFactory.CreateCard(_currentRecipe.Deliverable);
+        var deliverableCard = GameManager.Instance.CardFactory.CreateCard(_currentRecipe.GetDeliverable());
         var rectTransform = deliverableCard.GetComponent<RectTransform>();
         float halfCardWidth = rectTransform.rect.width * rectTransform.localScale.x;
         deliverableCard.transform.position = transform.position + new Vector3(halfCardWidth + 10, 0, 0);
@@ -148,15 +148,15 @@ public class CardStack : MonoBehaviour
         _currentRecipe = StaticDataSystem.Instance.FindValidRecipe(this);
         if (_currentRecipe == null && Count > 1)
         {
-            _currentRecipe = await RecipeGenerator.Instance.TryGetRecipe(this);
+            _currentRecipe = await RecipeSystem.Instance.TryGetRecipe(this);
             if (_currentRecipe != null)
             {
-                Debug.LogFormat("CheckForRecipe: Add new recipe for {0}", _currentRecipe.Deliverable.Archetype);
+                Debug.LogFormat("CheckForRecipe: Add new recipe for {0}", _currentRecipe);
             }
         }
         else
         {
-            Debug.LogFormat("CheckForRecipe: Found existing recipe for {0}", _currentRecipe.Deliverable.Archetype);
+            Debug.LogFormat("CheckForRecipe: Found existing recipe for {0}", _currentRecipe);
         }
 
         SetProcessingState(_currentRecipe != null);
@@ -165,5 +165,10 @@ public class CardStack : MonoBehaviour
     public override string ToString()
     {
         return string.Join(", ", _cardsInStack.Select(card => card.DataAsset.Archetype));
+    }
+
+    public bool HasCardType(CardType cardType)
+    {
+        return _cardsInStack.Any(card => card.DataAsset.CardType == cardType);
     }
 }
